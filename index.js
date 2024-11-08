@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 3000; // You can change this port number if needed
-const db = require("./DB/db")
-const userRoutes = require("./routes/user.js")
-const addQuestionRoutes = require('./routes/addQuestion.js')
+const port = 3000; // Port number you can change if needed
+
+// Import routes
+const userRoutes = require("./routes/user.js");
+const addQuestionRoutes = require('./routes/addQuestion.js');
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -13,10 +14,28 @@ app.get('/', (req, res) => {
     res.send('Welcome to SIP Abacus THE BEAD APP');
 });
 
-app.use("/", userRoutes)
-app.use("/question", addQuestionRoutes)
+// Use routes for user and questions
+app.use("/", userRoutes);
+app.use("/question", addQuestionRoutes);
+
+// Error handling middleware (optional but recommended)
+app.use((req, res, next) => {
+    const error = new Error('Not Found');
+    error.status = 404;
+    next(error);
+});
+
+// General error handler (this is for any other errors)
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.json({
+        message: err.message,
+        error: process.env.NODE_ENV === 'development' ? err : {}
+    });
+});
 
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
+
