@@ -128,47 +128,8 @@ async function deleteStudentById(req, res) {
     }
 }
 
-// async function getOTP(req, res) {
-//     try {
-//         // const { phoneNumber } = req.body; 
-
-       
-//         const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generates OTP between 100000 and 999999
 
 
-//         // Send OTP via SMS
-//         const message = await client.messages.create({
-//             body: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
-//             from: '9361149592', // Replace with your Twilio phone number
-//             to: "9443273318" // User's phone number
-//         });
-
-//         console.log(`Message sent: ${message.sid}`); // Log the message SID
-
-//         res.status(200).json({ message: 'OTP sent successfully' });
-//     } catch (error) {
-//         console.error('Error sending OTP:', error);
-//         res.status(500).json({ message: 'Failed to send OTP', error: error.message });
-//     }
-// }
-
-// async function sendOTP(req, res) {
-    
-
-//     client.verify.v2.services("VA87d9133b1dcf992c99a5f5094d3e9768")
-//       .verifications
-//       .create({to: '+919361149592', channel: 'sms'})
-//       .then(verification => console.log(verification.sid));
-// }
-
-// async function checkOTp(req, res) {
-
-//     const {code} = req.body;
-// client.verify.v2.services("VA87d9133b1dcf992c99a5f5094d3e9768")
-//       .verificationChecks
-//       .create({to: '+919361149592', code: code})
-//       .then(verification_check => console.log(verification_check.status));
-// }
 
 async function getOTP(req, res) {
     try {
@@ -184,13 +145,7 @@ async function getOTP(req, res) {
         };
         await transporter.sendMail(mailOptions);
         
-        // If using SMS, you would send the OTP like this:
-        // const client = twilio('TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN');
-        // await client.messages.create({
-        //     body: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
-        //     from: 'TWILIO_PHONE_NUMBER',
-        //     to: phoneNumber
-        // });
+      
 
         await User.findByIdAndUpdate({_id: new Object(id)},
         {$set: {OTP: otp}},
