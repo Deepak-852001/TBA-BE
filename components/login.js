@@ -1,18 +1,15 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const accountSid = 'ACd4c0c1b9d947fcb25fa3ead1e6839772';
-const authToken = '1f30e19919a4567d17ce6d413548e3dd';
-const client = require('twilio')(accountSid, authToken);
 const nodemailer = require('nodemailer');
 
 
 let transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
+    host: process.env.MAILER_HOST,
+    port: process.env.PORT,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "deepakdhoni7781@gmail.com", // generated ethereal user
-      pass: "bdZhvz0nCUa3QWt7"
+      user: process.env.MAILER_USERNAME, // generated ethereal user
+      pass: process.env.MAILER_PASSWORD
     },
   });
 
