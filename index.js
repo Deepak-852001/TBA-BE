@@ -1,10 +1,14 @@
 const express = require('express');
+const cors = require('cors'); // Import the cors package
 const app = express();
 const port = 3000; // Port number you can change if needed
 
 // Import routes
 const userRoutes = require("./routes/user.js");
 const addQuestionRoutes = require('./routes/addQuestion.js');
+
+// Enable CORS for all routes
+app.use(cors()); // This will allow all origins by default
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -38,4 +42,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
-
