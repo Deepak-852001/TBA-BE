@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors'); // Import the cors package
 const app = express();
 const port = 3000; // Port number you can change if needed
+const db = require("./DB/db")
 
 // Import routes
 const userRoutes = require("./routes/user.js");
